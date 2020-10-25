@@ -14,7 +14,7 @@ public class CalculateDistanceBetweenPoints {
     Point p3 = new Point(4,5);
     Point p4 = new Point(3,2);
     System.out.println("Расстояние между точками координат " + "A(" + p3.x + "; " + p3.y + ") " + "и " + "B(" + p4.x +
-            "; " + p4.y + ")" + " = " + p3.distance(p4));
+            "; " + p4.y + ")" + " = " + p4.distance(p3));
 
   }
 
