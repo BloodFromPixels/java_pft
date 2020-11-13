@@ -30,6 +30,12 @@ public class GroupDeletionTests extends TestBase {
 
     // Сравнение размера списков до и после удаления:
     Assert.assertEquals(after.size(), before.size() - 1);
+
+    // Чтобы сравнивать сами списки, нужно удалить лишний элемент из старого списка
+    before.remove(before.size() - 1);
+
+    // Теперь сравниваем содержимое нового и старого списков:
+    Assert.assertEquals(before, after);
   }
 
 }

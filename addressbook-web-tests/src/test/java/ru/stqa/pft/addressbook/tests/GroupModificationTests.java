@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class GroupModificationTests extends TestBase {
@@ -23,7 +24,8 @@ public class GroupModificationTests extends TestBase {
     // Выбираем конкретную группу и изменяем:
     app.getGroupHelper().selectGroup(before.size() - 1);
     app.getGroupHelper().initGroupModification();
-    app.getGroupHelper().fillGroupForm(new GroupData("test1", "test2", "test3"));
+    GroupData group = new GroupData(before.get(before.size() - 1).getId(), "test1", "test2", "test3");
+    app.getGroupHelper().fillGroupForm(group);
     app.getGroupHelper().submitGroupModification();
     app.getGroupHelper().returnToGroupPage();
 
@@ -32,5 +34,12 @@ public class GroupModificationTests extends TestBase {
 
     // Сравнение размера списков до и после модификации:
     Assert.assertEquals(after.size(), before.size());
+
+    // Чтобы сравнивать сами списки, нужно удалить лишний элемент из старого списка:
+    before.remove(before.size() - 1);
+    before.add(group);
+
+    // Теперь сравниваем содержимое нового и старого списков таким образом:
+    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
   }
 }
