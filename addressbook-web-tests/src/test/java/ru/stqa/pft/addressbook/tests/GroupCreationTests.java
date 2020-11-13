@@ -17,7 +17,7 @@ public class GroupCreationTests extends TestBase {
     List<GroupData> before = app.getGroupHelper().getGroupList();
 
     // Создаём группу:
-    GroupData group = new GroupData("test1", null, null);
+    GroupData group = new GroupData("test2", null, null);
     app.getGroupHelper().createGroup(group);
 
     // Список групп после добавления:
@@ -26,14 +26,8 @@ public class GroupCreationTests extends TestBase {
     // Сравнение размера списков до и после добавления:
     Assert.assertEquals(after.size(), before.size() + 1);
 
-    // Среди всех элементов списка ищем элемент с самым большим идентификатором:
-    int max = 0;
-    for (GroupData g : after) {
-      if (g.getId() > max) {
-        max = g.getId();
-      }
-    }
-    group.setId(max);
+    // Превращение списка в поток и определение элемента с самым большим идентификатором:
+    group.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
     before.add(group);
 
     // Теперь сравниваем содержимое нового и старого списков таким образом:
