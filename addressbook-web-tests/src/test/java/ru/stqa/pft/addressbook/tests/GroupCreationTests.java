@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
@@ -26,11 +27,15 @@ public class GroupCreationTests extends TestBase {
     // Сравнение размера списков до и после добавления:
     Assert.assertEquals(after.size(), before.size() + 1);
 
-    // Превращение списка в поток и определение элемента с самым большим идентификатором:
-    group.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
     before.add(group);
+    /*
+    Сортируем списки (с помощью анонимных функций и лямбда-выражений):
+    */
+    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+    before.sort(byId);
+    after.sort(byId);
 
-    // Теперь сравниваем содержимое нового и старого списков таким образом:
-    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+    // Теперь сравниваем содержимое нового и старого списков:
+    Assert.assertEquals(before, after);
   }
 }
