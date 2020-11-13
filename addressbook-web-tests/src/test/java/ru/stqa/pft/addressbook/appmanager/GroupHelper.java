@@ -79,7 +79,7 @@ public class GroupHelper extends HelperBase {
       String name = element.getText();
 
       // В элементе "input" берём атрибут с именем "value":
-      String id = element.findElement(By.tagName("input")).getAttribute("value");
+      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
 
       // Создаём объект GroupData, который заполняем полученными выше значениями:
       GroupData group = new GroupData(id, name, null, null);
