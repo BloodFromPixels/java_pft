@@ -22,15 +22,12 @@ public class Collections {
     */
 
     // Короткое описание массива:
-
     String[] langs = {"Java", "C#", "Python", "PHP"};
 
     // Интерфейс List и класс, который реализует этот интерфейс. В скобках <> указан тип элементов в списке:
-
     List<String> languages = new ArrayList<String>();
 
     // Заполняем список:
-
     languages.add("Java");
     languages.add("C#");
     languages.add("Python");
@@ -46,7 +43,6 @@ public class Collections {
     */
 
     // Специальное описание коллекций в Java, l - ссылка на элемент массива/списка:
-
     for (String l : langs) {
       System.out.println("Я хочу выучить " + l);
     }

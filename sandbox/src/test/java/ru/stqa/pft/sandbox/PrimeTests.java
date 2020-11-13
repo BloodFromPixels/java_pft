@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 public class PrimeTests {
 
   // Integer.MAX_VALUE - максимальное простое число. Тест проверяет, что для этого числа наш цикл возвращает true.
-
   @Test
   public void testPrime() {
     Assert.assertTrue(Primes.isPrime(Integer.MAX_VALUE));
@@ -18,7 +17,6 @@ public class PrimeTests {
   }
 
   // (enabled = false) - отключение теста.
-
   @Test (enabled = false)
   public void testPrimeLong() {
     long n = Integer.MAX_VALUE;
