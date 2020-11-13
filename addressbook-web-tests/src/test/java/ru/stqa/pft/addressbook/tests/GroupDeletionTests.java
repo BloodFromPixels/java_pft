@@ -19,7 +19,7 @@ public class GroupDeletionTests extends TestBase {
     }
 
     // Выбираем группу и удаляем. Возвращаемся на исходную страницу с группами:
-    app.getGroupHelper().selectGroup();
+    app.getGroupHelper().selectGroup(before - 1);
     app.getGroupHelper().deleteSelectedGroups();
     app.getGroupHelper().returnToGroupPage();
 

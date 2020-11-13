@@ -32,8 +32,11 @@ public class GroupHelper extends HelperBase {
     click(By.name("delete"));
   }
 
-  public void selectGroup() {
-    click(By.name("selected[]"));
+  // Выбор группы:
+  public void selectGroup(int index) {
+
+    // Находим все элементы с локатором "selected[]", выбираем нужный по индексу и кликаем по нему:
+    wd.findElements(By.name("selected[]")).get(index).click();
   }
 
   public void initGroupModification() {
