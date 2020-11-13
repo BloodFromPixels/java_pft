@@ -4,30 +4,32 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
+import java.util.List;
+
 public class GroupDeletionTests extends TestBase {
 
   @Test
   public void testGroupDeletion() {
     app.getNavigationHelper().goToGroupPage();
 
-    // Количество групп до добавления:
-    int before = app.getGroupHelper().getGroupCount();
-
     // Ищем, есть ли уже созданные группы, которые можно удалить. Если нет - создаём:
     if (! app.getGroupHelper().isThereAGroup()) {
       app.getGroupHelper().createGroup(new GroupData("test1", null, null));
     }
 
-    // Выбираем группу и удаляем. Возвращаемся на исходную страницу с группами:
-    app.getGroupHelper().selectGroup(before - 1);
+    // Список групп до удаления:
+    List<GroupData> before = app.getGroupHelper().getGroupList();
+
+    // Выбираем конкретную группу и удаляем. Возвращаемся на исходную страницу с группами:
+    app.getGroupHelper().selectGroup(before.size() - 1);
     app.getGroupHelper().deleteSelectedGroups();
     app.getGroupHelper().returnToGroupPage();
 
-    // Количество групп после добавления:
-    int after = app.getGroupHelper().getGroupCount();
+    // Список групп после удаления:
+    List<GroupData> after = app.getGroupHelper().getGroupList();
 
-    // Сравнение количества групп до и после добавления:
-    Assert.assertEquals(after, before - 1);
+    // Сравнение размера списков до и после удаления:
+    Assert.assertEquals(after.size(), before.size() - 1);
   }
 
 }

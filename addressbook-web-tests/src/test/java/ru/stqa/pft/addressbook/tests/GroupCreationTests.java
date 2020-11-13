@@ -4,23 +4,25 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
+import java.util.List;
+
 public class GroupCreationTests extends TestBase {
 
   @Test
   public void testGroupCreation() {
     app.getNavigationHelper().goToGroupPage();
 
-    // Количество групп до добавления:
-    int before = app.getGroupHelper().getGroupCount();
+    // Список групп до добавления:
+    List<GroupData> before = app.getGroupHelper().getGroupList();
 
     // Создаём группу:
     app.getGroupHelper().createGroup(new GroupData("test1", null, null));
 
-    // Количество групп после добавления:
-    int after = app.getGroupHelper().getGroupCount();
+    // Список групп после добавления:
+    List<GroupData> after = app.getGroupHelper().getGroupList();
 
-    // Сравнение количества групп до и после добавления:
-    Assert.assertEquals(after, before + 1);
+    // Сравнение размера списков до и после добавления:
+    Assert.assertEquals(after.size(), before.size() + 1);
   }
 
 }
