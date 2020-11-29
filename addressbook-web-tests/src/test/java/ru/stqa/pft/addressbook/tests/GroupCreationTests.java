@@ -20,7 +20,7 @@ public class GroupCreationTests extends TestBase {
     int index = before.size() + 1;
 
     // Создаём группу:
-    GroupData group = new GroupData("test2", null, null);
+    GroupData group = new GroupData().withName("test2");
     app.group().create(group);
 
     // Список групп после добавления:

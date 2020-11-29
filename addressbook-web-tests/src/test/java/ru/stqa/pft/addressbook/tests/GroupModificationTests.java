@@ -16,7 +16,7 @@ public class GroupModificationTests extends TestBase {
 
     // Ищем, есть ли группы для модификации. Если нет - создаём:
     if (app.group().list().size() == 0) {
-      app.group().create(new GroupData("test1", null, null));
+      app.group().create(new GroupData().withName("test1"));
     }
   }
 
@@ -30,7 +30,8 @@ public class GroupModificationTests extends TestBase {
     int index = before.size() - 1;
 
     // Выбираем конкретную группу и изменяем:
-    GroupData group = new GroupData(before.get(index).getId(), "test1", "test2", "test3");
+    GroupData group = new GroupData()
+            .withId(before.get(index).getId()).withName("test1").withHeader("test2").withFooter("test3");
     app.group().modify(index, group);
 
     // Список групп после модификации:
