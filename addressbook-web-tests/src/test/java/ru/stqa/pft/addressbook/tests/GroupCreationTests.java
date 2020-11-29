@@ -16,6 +16,9 @@ public class GroupCreationTests extends TestBase {
     // Список групп до добавления:
     List<GroupData> before = app.getGroupHelper().getGroupList();
 
+    // Индекс последнего добавленного объекта в таблице:
+    int index = before.size() + 1;
+
     // Создаём группу:
     GroupData group = new GroupData("test2", null, null);
     app.getGroupHelper().createGroup(group);
@@ -24,7 +27,7 @@ public class GroupCreationTests extends TestBase {
     List<GroupData> after = app.getGroupHelper().getGroupList();
 
     // Сравнение размера списков до и после добавления:
-    Assert.assertEquals(after.size(), before.size() + 1);
+    Assert.assertEquals(after.size(), index);
 
     before.add(group);
 
