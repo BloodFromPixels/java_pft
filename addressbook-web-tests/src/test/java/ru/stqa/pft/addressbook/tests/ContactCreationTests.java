@@ -14,10 +14,10 @@ public class ContactCreationTests extends TestBase{
     // Список контактов до добавления:
     List<ContactData> before = app.getContactHelper().getContactList();
 
-    app.getNavigationHelper().goToCreationPage();
+    app.goTo().goToCreationPage();
     ContactData contact = new ContactData("test1", "test2", "test1");
     app.getContactHelper().createContact(contact, true);
-    app.getNavigationHelper().returnToHomePage();
+    app.goTo().returnToHomePage();
 
     // Список контактов после добавления:
     List<ContactData> after = app.getContactHelper().getContactList();
