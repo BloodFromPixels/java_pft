@@ -5,8 +5,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class GroupModificationTests extends TestBase {
 
@@ -15,7 +14,7 @@ public class GroupModificationTests extends TestBase {
     app.goTo().GroupPage();
 
     // Ищем, есть ли группы для модификации. Если нет - создаём:
-    if (app.group().list().size() == 0) {
+    if (app.group().all().size() == 0) {
       app.group().create(new GroupData().withName("test1"));
     }
   }
@@ -23,29 +22,26 @@ public class GroupModificationTests extends TestBase {
   @Test
   public void testGroupModification () {
 
-    // Список групп до модификации:
-    List<GroupData> before = app.group().list();
+    // Множество групп до модификации:
+    Set<GroupData> before = app.group().all();
 
-    // Индекс последнего добавленного объекта в таблице:
-    int index = before.size() - 1;
+    // Возращение первого попавшего элемента множества и помещение его в объект deletedGroup:
+    GroupData modifiedGroup = before.iterator().next();
 
     // Выбираем конкретную группу и изменяем:
     GroupData group = new GroupData()
-            .withId(before.get(index).getId()).withName("test1").withHeader("test2").withFooter("test3");
-    app.group().modify(index, group);
+            .withId(modifiedGroup.getId()).withName("test1").withHeader("test2").withFooter("test3");
+    app.group().modify(group);
 
-    // Список групп после модификации:
-    List<GroupData> after = app.group().list();
+    // Множество групп после модификации:
+    Set<GroupData> after = app.group().all();
 
-    // Сравнение размера списков до и после модификации:
+    // Сравнение множеств до и после модификации:
     Assert.assertEquals(after.size(), before.size());
 
     // Чтобы сравнивать сами списки, нужно удалить лишний элемент из старого списка:
-    before.remove(index);
+    before.remove(modifiedGroup);
     before.add(group);
-    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
 
     // Теперь сравниваем содержимое нового и старого списков:
     Assert.assertEquals(before, after);

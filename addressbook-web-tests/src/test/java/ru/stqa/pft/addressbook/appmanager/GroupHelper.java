@@ -5,8 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GroupHelper extends HelperBase {
 
@@ -37,10 +38,10 @@ public class GroupHelper extends HelperBase {
   }
 
   // Выбор группы:
-  public void selectGroup(int index) {
+  public void selectGroupById(int id) {
 
-    // Находим все элементы с локатором "selected[]", выбираем нужный по индексу и кликаем по нему:
-    wd.findElements(By.name("selected[]")).get(index).click();
+    // Находим элемент с локатором, содержащим нужный нам идентификатор, и кликаем по нему:
+    wd.findElement(By.cssSelector("input[value = '" + id + "']")).click();
   }
 
   public void initGroupModification() {
@@ -58,16 +59,16 @@ public class GroupHelper extends HelperBase {
     returnToGroupPage();
   }
 
-  public void modify(int index, GroupData group) {
-    selectGroup(index);
+  public void modify(GroupData group) {
+    selectGroupById(group.getId());
     initGroupModification();
     fillGroupForm(group);
     submitGroupModification();
     returnToGroupPage();
   }
 
-  public void delete(int index) {
-    selectGroup(index);
+  public void delete(GroupData group) {
+    selectGroupById(group.getId());
     deleteSelectedGroups();
     returnToGroupPage();
   }
@@ -81,9 +82,9 @@ public class GroupHelper extends HelperBase {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  // Создание списка с группами и возращение полученного значения:
-  public List<GroupData> list() {
-    List<GroupData> groups = new ArrayList<GroupData>();
+  // Создание множества с группами и возращение полученного значения:
+  public Set<GroupData> all() {
+    Set<GroupData> groups = new HashSet<GroupData>();
 
     // Найти все элементы с css селектором span = group:
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
@@ -95,7 +96,7 @@ public class GroupHelper extends HelperBase {
       // В элементе "input" берём атрибут с именем "value":
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
 
-      // Полученными выше значениями заполняем GroupData, после чего заполняем список объектами:
+      // Полученными выше значениями заполняем GroupData, после чего заполняем множество объектами:
       groups.add(new GroupData().withId(id).withName(name));
     }
     return groups;

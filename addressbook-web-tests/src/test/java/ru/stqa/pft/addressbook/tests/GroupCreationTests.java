@@ -4,8 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class GroupCreationTests extends TestBase {
 
@@ -13,30 +12,24 @@ public class GroupCreationTests extends TestBase {
   public void testGroupCreation() {
     app.goTo().GroupPage();
 
-    // Список групп до добавления:
-    List<GroupData> before = app.group().list();
-
-    // Индекс последнего добавленного объекта в таблице:
-    int index = before.size() + 1;
+    // Множество групп до добавления:
+    Set<GroupData> before = app.group().all();
 
     // Создаём группу:
     GroupData group = new GroupData().withName("test2");
     app.group().create(group);
 
-    // Список групп после добавления:
-    List<GroupData> after = app.group().list();
+    // Множество групп после добавления:
+    Set<GroupData> after = app.group().all();
 
-    // Сравнение размера списков до и после добавления:
-    Assert.assertEquals(after.size(), index);
+    // Сравнение размера множеств до и после добавления:
+    Assert.assertEquals(after.size(), before.size() + 1);
 
+    // Получаем максимальный идентификатор среди всех наших групп:
+    group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
     before.add(group);
 
-    //Сортируем списки (с помощью анонимных функций и лямбда-выражений):
-    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
-
-    // Теперь сравниваем содержимое нового и старого списков:
+    // Теперь сравниваем содержимое нового и старого множеств:
     Assert.assertEquals(before, after);
   }
 }
