@@ -61,20 +61,32 @@ public class ContactHelper extends HelperBase {
     return isElementPresent(By.name("selected[]"));
   }
 
-  public void createContact(ContactData contact, boolean creation) {
+  public void create(ContactData contact, boolean creation) {
 
     fillContactForm(contact, creation);
     submitContactCreation();
   }
 
-  public void modifyContact(int index, ContactData contact) {
+  public void modify(int index, ContactData contact) {
     initContactModification(index);
     fillContactForm(contact, false);
     submitContactModification();
     returnToHomePage();
   }
 
-  public List<ContactData> getContactList() {
+  public void delete(int index) {
+    selectContact(index);
+    deleteSelectedContact();
+
+    // Ожидание в 4 секунды, чтобы после удаления сработал редирект и мы правильно подсчитали список контактов
+    try {
+      Thread.sleep(4000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public List<ContactData> list() {
     List<ContactData> contacts = new ArrayList<ContactData>();
 
     // Найти все элементы с тегом tr:

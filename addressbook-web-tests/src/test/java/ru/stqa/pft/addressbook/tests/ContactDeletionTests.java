@@ -11,10 +11,10 @@ public class ContactDeletionTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
-    if (!app.getContactHelper().isThereAContact()) {
-      app.goTo().CreationPage();
-      app.getContactHelper().createContact(new ContactData("test1", "test2", "test1"), true);
-      app.getContactHelper().returnToHomePage();
+    if (app.contact().list().size() == 0) {
+      app.goTo().creationPage();
+      app.contact().create(new ContactData("test1", "test2", "test1"), true);
+      app.contact().returnToHomePage();
     }
   }
 
@@ -22,26 +22,20 @@ public class ContactDeletionTests extends TestBase {
   public void testContactDeletion() {
 
     // Список контактов до удаления:
-    List<ContactData> before = app.getContactHelper().getContactList();
+    List<ContactData> before = app.contact().list();
 
-    app.getContactHelper().selectContact(before.size() - 1);
-    app.getContactHelper().deleteSelectedContact();
+    int index = before.size() - 1;
 
-    // Ожидание в 4 секунды, чтобы после удаления сработал редирект и мы правильно подсчитали список контактов
-    try {
-      Thread.sleep(4000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    app.contact().delete(index);
 
     // Список контактов после удаления:
-    List<ContactData> after = app.getContactHelper().getContactList();
+    List<ContactData> after = app.contact().list();
 
     // Сравнение размера списков до и после удаления:
     Assert.assertEquals(after.size(), before.size() - 1);
 
     // Чтобы сравнивать сами списки, нужно удалить лишний элемент из старого списка
-    before.remove(before.size() - 1);
+    before.remove(index);
 
     // Теперь сравниваем содержимое нового и старого списков:
     Assert.assertEquals(before, after);

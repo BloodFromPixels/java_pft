@@ -12,10 +12,10 @@ public class ContactModificationTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
-    if (!app.getContactHelper().isThereAContact()) {
-      app.goTo().CreationPage();
-      app.getContactHelper().createContact(new ContactData("test1", "test2", "test1"), true);
-      app.getContactHelper().returnToHomePage();
+    if (app.contact().list().size() == 0) {
+      app.goTo().creationPage();
+      app.contact().create(new ContactData("test1", "test2", "test1"), true);
+      app.contact().returnToHomePage();
     }
   }
 
@@ -23,7 +23,7 @@ public class ContactModificationTests extends TestBase {
   public void testContactModification() {
 
     // Список контактов до модификации:
-    List<ContactData> before = app.getContactHelper().getContactList();
+    List<ContactData> before = app.contact().list();
 
     int index = before.size() - 1;
 
@@ -31,10 +31,10 @@ public class ContactModificationTests extends TestBase {
             .get(index)
             .getId(),"test1", "test2", null);
 
-    app.getContactHelper().modifyContact(index, contact);
+    app.contact().modify(index, contact);
 
     // Список контактов после модификации:
-    List<ContactData> after = app.getContactHelper().getContactList();
+    List<ContactData> after = app.contact().list();
 
     // Сравнение размера списков до и после модификации:
     Assert.assertEquals(after.size(), before.size());

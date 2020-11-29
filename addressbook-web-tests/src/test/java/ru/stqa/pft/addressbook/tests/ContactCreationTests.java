@@ -12,15 +12,15 @@ public class ContactCreationTests extends TestBase{
   @Test
   public void testContactCreation() {
     // Список контактов до добавления:
-    List<ContactData> before = app.getContactHelper().getContactList();
+    List<ContactData> before = app.contact().list();
 
-    app.goTo().CreationPage();
+    app.goTo().creationPage();
     ContactData contact = new ContactData("test1", "test2", "test1");
-    app.getContactHelper().createContact(contact, true);
-    app.getContactHelper().returnToHomePage();
+    app.contact().create(contact, true);
+    app.contact().returnToHomePage();
 
     // Список контактов после добавления:
-    List<ContactData> after = app.getContactHelper().getContactList();
+    List<ContactData> after = app.contact().list();
 
     // Сравнение размера списков до и после добавления:
     Assert.assertEquals(after.size(), before.size() + 1);
