@@ -1,11 +1,13 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class GroupModificationTests extends TestBase {
 
@@ -23,7 +25,7 @@ public class GroupModificationTests extends TestBase {
   public void testGroupModification () {
 
     // Множество групп до модификации:
-    Set<GroupData> before = app.group().all();
+    Groups before = app.group().all();
 
     // Возращение первого попавшего элемента множества и помещение его в объект deletedGroup:
     GroupData modifiedGroup = before.iterator().next();
@@ -34,16 +36,11 @@ public class GroupModificationTests extends TestBase {
     app.group().modify(group);
 
     // Множество групп после модификации:
-    Set<GroupData> after = app.group().all();
+    Groups after = app.group().all();
 
     // Сравнение множеств до и после модификации:
-    Assert.assertEquals(after.size(), before.size());
+    assertEquals(after.size(), before.size());
 
-    // Чтобы сравнивать сами списки, нужно удалить лишний элемент из старого списка:
-    before.remove(modifiedGroup);
-    before.add(group);
-
-    // Теперь сравниваем содержимое нового и старого списков:
-    Assert.assertEquals(before, after);
+    assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
   }
 }

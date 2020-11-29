@@ -1,11 +1,13 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class GroupDeletionTests extends TestBase {
 
@@ -23,7 +25,7 @@ public class GroupDeletionTests extends TestBase {
   public void testGroupDeletion() {
 
     // Множество групп до удаления:
-    Set<GroupData> before = app.group().all();
+    Groups before = app.group().all();
 
     // Возращение первого попавшего элемента множества и помещение его в объект deletedGroup:
     GroupData deletedGroup = before.iterator().next();
@@ -32,15 +34,11 @@ public class GroupDeletionTests extends TestBase {
     app.group().delete(deletedGroup);
 
     // Множество групп после удаления:
-    Set<GroupData> after = app.group().all();
+    Groups after = app.group().all();
 
     // Сравнение размера множеств до и после удаления:
-    Assert.assertEquals(after.size(), before.size() - 1);
+    assertEquals(after.size(), before.size() - 1);
 
-    // Чтобы сравнивать сами списки, нужно удалить лишний элемент из старого множества:
-    before.remove(deletedGroup);
-
-    // Теперь сравниваем содержимое нового и старого списков:
-    Assert.assertEquals(before, after);
+    assertThat(after, equalTo(before.without(deletedGroup)));
   }
 }
