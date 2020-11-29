@@ -22,6 +22,13 @@ public class ContactDeletionTests extends TestBase {
     app.getContactHelper().selectContact(before.size() - 1);
     app.getContactHelper().deleteSelectedContact();
 
+    // Ожидание в 4 секунды, чтобы после удаления сработал редирект и мы правильно подсчитали список контактов
+    try {
+      Thread.sleep(4000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
     // Список контактов после удаления:
     List<ContactData> after = app.getContactHelper().getContactList();
 

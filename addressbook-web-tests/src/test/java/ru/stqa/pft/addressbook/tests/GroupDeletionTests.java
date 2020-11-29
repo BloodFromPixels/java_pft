@@ -29,6 +29,7 @@ public class GroupDeletionTests extends TestBase {
     List<GroupData> after = app.getGroupHelper().getGroupList();
 
     // Сравнение размера списков до и после удаления:
+
     Assert.assertEquals(after.size(), before.size() - 1);
 
     // Чтобы сравнивать сами списки, нужно удалить лишний элемент из старого списка
