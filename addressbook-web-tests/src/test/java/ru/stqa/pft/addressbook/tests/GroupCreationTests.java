@@ -11,20 +11,20 @@ public class GroupCreationTests extends TestBase {
 
   @Test
   public void testGroupCreation() {
-    app.getNavigationHelper().goToGroupPage();
+    app.goTo().GroupPage();
 
     // Список групп до добавления:
-    List<GroupData> before = app.getGroupHelper().getGroupList();
+    List<GroupData> before = app.group().list();
 
     // Индекс последнего добавленного объекта в таблице:
     int index = before.size() + 1;
 
     // Создаём группу:
     GroupData group = new GroupData("test2", null, null);
-    app.getGroupHelper().createGroup(group);
+    app.group().create(group);
 
     // Список групп после добавления:
-    List<GroupData> after = app.getGroupHelper().getGroupList();
+    List<GroupData> after = app.group().list();
 
     // Сравнение размера списков до и после добавления:
     Assert.assertEquals(after.size(), index);
