@@ -105,11 +105,8 @@ public class ContactHelper extends HelperBase {
         String lastName = columns.get(1).getText();
         String firstName = columns.get(2).getText();
 
-        // Создаём объект ContactData, который заполняем полученными выше значениями:
-        ContactData contact = new ContactData(firstName, lastName, null);
-
-        // Заполняем список полученными объектами:
-        contacts.add(contact);
+        // Полученными выше значениями заполняем ContactData, после чего заполняем множество объектами:
+        contacts.add(new ContactData().withFirstname(firstName).withLastname(lastName));
       }
     }
     return contacts;
