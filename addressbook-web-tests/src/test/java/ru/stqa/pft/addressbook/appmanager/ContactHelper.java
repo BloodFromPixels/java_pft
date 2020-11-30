@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
 import java.util.HashSet;
 import java.util.List;
@@ -78,7 +79,7 @@ public class ContactHelper extends HelperBase {
     selectContactById(contact.getId());
     deleteSelectedContact();
 
-    // Ожидание в 4 секунды, чтобы после удаления сработал редирект и мы правильно подсчитали список контактов
+    // Ожидание в 4 секунды, чтобы после удаления сработал редирект, и мы правильно подсчитали список контактов
     try {
       Thread.sleep(4000);
     } catch (InterruptedException e) {
@@ -86,10 +87,10 @@ public class ContactHelper extends HelperBase {
     }
   }
 
-  public Set<ContactData> all() {
-    Set<ContactData> contacts = new HashSet<ContactData>();
+  public Contacts all() {
+    Contacts contacts = new Contacts();
 
-    // Найти все элементы с тегом tr:
+    // Найти все элементы с тегом tr
     List<WebElement> rows = wd.findElements(By.tagName("tr"));
 
     // Фильтруем полученные строки по аттрибуту name (name должен быть равен entry)
@@ -97,7 +98,7 @@ public class ContactHelper extends HelperBase {
             .filter(row -> "entry".equals(row.getAttribute("name")))
             .collect(Collectors.toList());
 
-    // Смотрим на все найденные элементы и получаем их имя:
+    // Смотрим на все найденные элементы и получаем их имя
     for (WebElement element : elements) {
       List<WebElement> columns = element.findElements(By.tagName("td"));
 
@@ -106,7 +107,7 @@ public class ContactHelper extends HelperBase {
         String firstName = columns.get(2).getText();
         String id = columns.get(0).findElement(By.tagName("input")).getAttribute("id");
 
-        // Полученными выше значениями заполняем ContactData, после чего заполняем множество объектами:
+        // Полученными выше значениями заполняем ContactData, после чего заполняем множество объектами
         contacts.add(new ContactData().withFirstname(firstName).withLastname(lastName).withId(Integer.parseInt(id)));
       }
     }

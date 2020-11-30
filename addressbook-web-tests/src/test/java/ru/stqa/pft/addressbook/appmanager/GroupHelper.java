@@ -6,9 +6,7 @@ import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class GroupHelper extends HelperBase {
 
@@ -41,7 +39,7 @@ public class GroupHelper extends HelperBase {
   // Выбор группы:
   public void selectGroupById(int id) {
 
-    // Находим элемент с локатором, содержащим нужный нам идентификатор, и кликаем по нему:
+    // Находим элемент с локатором, содержащим нужный нам идентификатор, и кликаем по нему
     wd.findElement(By.cssSelector("input[value = '" + id + "']")).click();
   }
 
@@ -78,26 +76,26 @@ public class GroupHelper extends HelperBase {
     return isElementPresent(By.name("selected[]"));
   }
 
-  // Ищем все элементы на странице и считаем их количество:
+  // Ищем все элементы на странице и считаем их количество
   public int getGroupCount() {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  // Создание множества с группами и возращение полученного значения:
+  // Создание множества с группами и возращение полученного значения
   public Groups all() {
     Groups groups = new Groups();
 
-    // Найти все элементы с css селектором span = group:
+    // Найти все элементы с css селектором span = group
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
 
-    // Смотрим на все найденные элементы и получаем их имя:
+    // Смотрим на все найденные элементы и получаем их имя
     for (WebElement element : elements) {
       String name = element.getText();
 
-      // В элементе "input" берём атрибут с именем "value":
+      // В элементе "input" берём атрибут с именем "value"
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
 
-      // Полученными выше значениями заполняем GroupData, после чего заполняем множество объектами:
+      // Полученными выше значениями заполняем GroupData, после чего заполняем множество объектами
       groups.add(new GroupData().withId(id).withName(name));
     }
     return groups;

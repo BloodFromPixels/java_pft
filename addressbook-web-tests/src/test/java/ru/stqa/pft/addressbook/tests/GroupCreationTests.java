@@ -13,20 +13,20 @@ public class GroupCreationTests extends TestBase {
   public void testGroupCreation() {
     app.goTo().GroupPage();
 
-    // Множество групп до добавления:
+    // Множество групп до добавления
     Groups before = app.group().all();
 
-    // Создаём группу:
+    // Создаём группу
     GroupData group = new GroupData().withName("test2");
     app.group().create(group);
 
-    // Множество групп после добавления:
+    // Множество групп после добавления
     Groups after = app.group().all();
 
-    // Сравнение размера множеств до и после добавления:
+    // Сравнение размера множеств до и после добавления
     assertThat(after.size(), equalTo(before.size() + 1));
 
-    // Теперь сравниваем содержимое нового и старого множеств:
+    // Сравнение содержимого нового и старого множеств
     assertThat(after, equalTo(before.withAdded(group.withId(after
             .stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
   }

@@ -1,33 +1,32 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestBase{
 
   @Test
   public void testContactCreation() {
-    // Список контактов до добавления:
-    Set<ContactData> before = app.contact().all();
+    // Множество контактов до добавления
+    Contacts before = app.contact().all();
 
     app.goTo().creationPage();
     ContactData contact = new ContactData().withFirstname("test1").withLastname("test2").withGroup("test1");
     app.contact().create(contact, true);
     app.contact().returnToHomePage();
 
-    // Список контактов после добавления:
-    Set<ContactData> after = app.contact().all();
+    // Множество контактов после добавления
+    Contacts after = app.contact().all();
 
-    // Сравнение размера списков до и после добавления:
-    Assert.assertEquals(after.size(), before.size() + 1);
+    // Сравнение размера множеств до и после добавления
+    assertThat(after.size(), equalTo(before.size() + 1));
 
-    contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt());
-    before.add(contact);
-
-    // Теперь сравниваем содержимое нового и старого списков:
-    Assert.assertEquals(before, after);
+    // Сравнение содержимого нового и старого множеств
+    assertThat(after, equalTo(before.withAdded(contact
+            .withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
   }
 }

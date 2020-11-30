@@ -1,11 +1,13 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class ContactModificationTests extends TestBase {
 
@@ -24,8 +26,8 @@ public class ContactModificationTests extends TestBase {
   @Test
   public void testContactModification() {
 
-    // Список контактов до модификации:
-    Set<ContactData> before = app.contact().all();
+    // Множество контактов до модификации
+    Contacts before = app.contact().all();
 
     ContactData modifiedContact = before.iterator().next();
 
@@ -34,17 +36,13 @@ public class ContactModificationTests extends TestBase {
 
     app.contact().modify(contact);
 
-    // Список контактов после модификации:
-    Set<ContactData> after = app.contact().all();
+    // Множество контактов после модификации
+    Contacts after = app.contact().all();
 
-    // Сравнение размера списков до и после модификации:
-    Assert.assertEquals(after.size(), before.size());
+    // Сравнение размера множеств до и после модификации
+    assertEquals(after.size(), before.size());
 
-    // Чтобы сравнивать сами списки, нужно удалить лишний элемент из старого списка:
-    before.remove(modifiedContact);
-    before.add(contact);
-
-    // Теперь сравниваем содержимое нового и старого списков:
-    Assert.assertEquals(before, after);
+    // Сравнение содержимого нового и старого множеств
+    assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
   }
 }
