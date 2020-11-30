@@ -4,15 +4,14 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class ContactCreationTests extends TestBase{
 
   @Test
   public void testContactCreation() {
     // Список контактов до добавления:
-    List<ContactData> before = app.contact().list();
+    Set<ContactData> before = app.contact().all();
 
     app.goTo().creationPage();
     ContactData contact = new ContactData().withFirstname("test1").withLastname("test2").withGroup("test1");
@@ -20,17 +19,13 @@ public class ContactCreationTests extends TestBase{
     app.contact().returnToHomePage();
 
     // Список контактов после добавления:
-    List<ContactData> after = app.contact().list();
+    Set<ContactData> after = app.contact().all();
 
     // Сравнение размера списков до и после добавления:
     Assert.assertEquals(after.size(), before.size() + 1);
 
+    contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt());
     before.add(contact);
-
-    //Сортируем списки (с помощью анонимных функций и лямбда-выражений):
-    Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
-    before.sort(byId);
-    after.sort(byId);
 
     // Теперь сравниваем содержимое нового и старого списков:
     Assert.assertEquals(before, after);
