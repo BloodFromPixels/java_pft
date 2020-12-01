@@ -25,23 +25,16 @@ public class ContactModificationTests extends TestBase {
 
   @Test
   public void testContactModification() {
-
     // Множество контактов до модификации
     Contacts before = app.contact().all();
-
     ContactData modifiedContact = before.iterator().next();
-
     ContactData contact = new ContactData().withId(modifiedContact
             .getId()).withFirstname("test1").withLastname("test2");
-
     app.contact().modify(contact);
-
     // Множество контактов после модификации
     Contacts after = app.contact().all();
-
     // Сравнение размера множеств до и после модификации
     assertEquals(after.size(), before.size());
-
     // Сравнение содержимого нового и старого множеств
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
   }

@@ -7,11 +7,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
-import ru.stqa.pft.addressbook.model.Groups;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ContactHelper extends HelperBase {
@@ -100,24 +97,19 @@ public class ContactHelper extends HelperBase {
       return new Contacts(contactCache);
     }
     contactCache = new Contacts();
-
     // Найти все элементы с тегом tr
     List<WebElement> rows = wd.findElements(By.tagName("tr"));
-
     // Фильтруем полученные строки по аттрибуту name (name должен быть равен entry)
     List<WebElement> elements = rows.stream()
             .filter(row -> "entry".equals(row.getAttribute("name")))
             .collect(Collectors.toList());
-
     // Смотрим на все найденные элементы и получаем их имя
     for (WebElement element : elements) {
       List<WebElement> columns = element.findElements(By.tagName("td"));
-
       if (columns.size() >= 3) {
         String lastName = columns.get(1).getText();
         String firstName = columns.get(2).getText();
         String id = columns.get(0).findElement(By.tagName("input")).getAttribute("id");
-
         // Полученными выше значениями заполняем ContactData, после чего заполняем множество объектами
         contactCache.add(new ContactData().withFirstname(firstName).withLastname(lastName).withId(Integer.parseInt(id)));
       }

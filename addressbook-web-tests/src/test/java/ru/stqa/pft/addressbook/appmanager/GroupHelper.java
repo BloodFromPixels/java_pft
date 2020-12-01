@@ -80,7 +80,7 @@ public class GroupHelper extends HelperBase {
   }
 
   // Ищем все элементы на странице и считаем их количество
-  public int getGroupCount() {
+  public int count() {
     return wd.findElements(By.name("selected[]")).size();
   }
 
