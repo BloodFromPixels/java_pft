@@ -19,7 +19,7 @@ public class ContactModificationTests extends TestBase {
               .withFirstname("test1")
               .withLastname("test2")
               .withGroup("test1"), true);
-      app.contact().returnToHomePage();
+      app.contact().goToHomePage();
     }
   }
 
