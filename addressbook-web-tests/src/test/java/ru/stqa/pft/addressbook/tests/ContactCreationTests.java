@@ -16,7 +16,7 @@ public class ContactCreationTests extends TestBase{
     app.goTo().creationPage();
     ContactData contact = new ContactData().withFirstname("test1").withLastname("test2").withGroup("test1");
     app.contact().create(contact, true);
-    app.contact().returnToHomePage();
+    app.contact().goToHomePage();
     // Множество контактов после добавления
     Contacts after = app.contact().all();
     // Сравнение размера множеств до и после добавления
