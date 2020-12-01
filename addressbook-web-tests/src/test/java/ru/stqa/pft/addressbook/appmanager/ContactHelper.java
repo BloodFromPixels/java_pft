@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.HashSet;
 import java.util.List;
@@ -66,18 +67,21 @@ public class ContactHelper extends HelperBase {
 
     fillContactForm(contact, creation);
     submitContactCreation();
+    contactCache = null;
   }
 
   public void modify(ContactData contact) {
     initContactModification(contact);
     fillContactForm(contact, false);
     submitContactModification();
+    contactCache = null;
     returnToHomePage();
   }
 
   public void delete(ContactData contact) {
     selectContactById(contact.getId());
     deleteSelectedContact();
+    contactCache = null;
 
     // Ожидание в 4 секунды, чтобы после удаления сработал редирект, и мы правильно подсчитали список контактов
     try {
@@ -87,8 +91,15 @@ public class ContactHelper extends HelperBase {
     }
   }
 
+  // Кэш
+  private Contacts contactCache = null;
+
   public Contacts all() {
-    Contacts contacts = new Contacts();
+    // Использование кэша
+    if (contactCache != null) {
+      return new Contacts(contactCache);
+    }
+    contactCache = new Contacts();
 
     // Найти все элементы с тегом tr
     List<WebElement> rows = wd.findElements(By.tagName("tr"));
@@ -108,10 +119,10 @@ public class ContactHelper extends HelperBase {
         String id = columns.get(0).findElement(By.tagName("input")).getAttribute("id");
 
         // Полученными выше значениями заполняем ContactData, после чего заполняем множество объектами
-        contacts.add(new ContactData().withFirstname(firstName).withLastname(lastName).withId(Integer.parseInt(id)));
+        contactCache.add(new ContactData().withFirstname(firstName).withLastname(lastName).withId(Integer.parseInt(id)));
       }
     }
-    return contacts;
+    return new Contacts(contactCache);
   }
 }
 
