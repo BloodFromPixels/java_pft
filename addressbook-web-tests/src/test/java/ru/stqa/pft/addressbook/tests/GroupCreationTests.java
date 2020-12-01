@@ -12,32 +12,22 @@ public class GroupCreationTests extends TestBase {
   @Test
   public void testGroupCreation() {
     app.goTo().GroupPage();
+
     // Множество групп до добавления
     Groups before = app.group().all();
+
     // Создаём группу
     GroupData group = new GroupData().withName("test2");
     app.group().create(group);
-    assertThat(app.group().count(), equalTo(before.size() + 1));
+
     // Множество групп после добавления
     Groups after = app.group().all();
+
+    // Сравнение размера множеств до и после добавления
+    assertThat(after.size(), equalTo(before.size() + 1));
+
     // Сравнение содержимого нового и старого множеств
     assertThat(after, equalTo(before.withAdded(group.withId(after
             .stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
-  }
-
-  @Test
-  public void testBadGroupCreation() {
-    app.goTo().GroupPage();
-    // Множество групп до добавления
-    Groups before = app.group().all();
-    // Создаём группу
-    GroupData group = new GroupData().withName("test'");
-    app.group().create(group);
-    // Сравнение размера множеств до и после добавления
-    assertThat(app.group().count(), equalTo(before.size()));
-    // Множество групп после добавления
-    Groups after = app.group().all();
-    // Сравнение содержимого нового и старого множеств
-    assertThat(after, equalTo(before));
   }
 }
