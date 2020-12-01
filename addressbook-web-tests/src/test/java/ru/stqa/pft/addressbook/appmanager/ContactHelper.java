@@ -78,7 +78,6 @@ public class ContactHelper extends HelperBase {
   public void delete(ContactData contact) {
     selectContactById(contact.getId());
     deleteSelectedContact();
-
     // Ожидание в 4 секунды, чтобы после удаления сработал редирект, и мы правильно подсчитали список контактов
     try {
       Thread.sleep(4000);
@@ -89,24 +88,19 @@ public class ContactHelper extends HelperBase {
 
   public Contacts all() {
     Contacts contacts = new Contacts();
-
     // Найти все элементы с тегом tr
     List<WebElement> rows = wd.findElements(By.tagName("tr"));
-
     // Фильтруем полученные строки по аттрибуту name (name должен быть равен entry)
     List<WebElement> elements = rows.stream()
             .filter(row -> "entry".equals(row.getAttribute("name")))
             .collect(Collectors.toList());
-
     // Смотрим на все найденные элементы и получаем их имя
     for (WebElement element : elements) {
       List<WebElement> columns = element.findElements(By.tagName("td"));
-
       if (columns.size() >= 3) {
         String lastName = columns.get(1).getText();
         String firstName = columns.get(2).getText();
         String id = columns.get(0).findElement(By.tagName("input")).getAttribute("id");
-
         // Полученными выше значениями заполняем ContactData, после чего заполняем множество объектами
         contacts.add(new ContactData().withFirstname(firstName).withLastname(lastName).withId(Integer.parseInt(id)));
       }

@@ -15,17 +15,13 @@ public class GroupCreationTests extends TestBase {
 
     // Множество групп до добавления
     Groups before = app.group().all();
-
     // Создаём группу
     GroupData group = new GroupData().withName("test2");
     app.group().create(group);
-
     // Множество групп после добавления
     Groups after = app.group().all();
-
     // Сравнение размера множеств до и после добавления
     assertThat(after.size(), equalTo(before.size() + 1));
-
     // Сравнение содержимого нового и старого множеств
     assertThat(after, equalTo(before.withAdded(group.withId(after
             .stream().mapToInt((g) -> g.getId()).max().getAsInt()))));

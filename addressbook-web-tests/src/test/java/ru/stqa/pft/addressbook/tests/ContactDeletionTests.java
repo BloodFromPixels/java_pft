@@ -28,17 +28,12 @@ public class ContactDeletionTests extends TestBase {
 
     // Множество контактов до удаления
     Contacts before = app.contact().all();
-
     ContactData deletedContact = before.iterator().next();
-
     app.contact().delete(deletedContact);
-
     // Множество контактов после удаления
     Contacts after = app.contact().all();
-
     // Сравнение размера множеств до и после удаления
     assertEquals(after.size(), before.size() - 1);
-
     // Сравнение содержимого нового и старого множеств
     assertThat(after, equalTo(before.without(deletedContact)));
   }
