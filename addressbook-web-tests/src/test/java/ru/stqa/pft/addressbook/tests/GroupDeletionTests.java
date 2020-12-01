@@ -7,7 +7,6 @@ import ru.stqa.pft.addressbook.model.Groups;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.testng.Assert.assertEquals;
 
 public class GroupDeletionTests extends TestBase {
 
@@ -28,10 +27,10 @@ public class GroupDeletionTests extends TestBase {
     GroupData deletedGroup = before.iterator().next();
     // Выбор группы и удаление. Возвращение на исходную страницу с группами
     app.group().delete(deletedGroup);
+    // Сравнение размера множеств до и после удаления
+    assertThat(app.group().count(), equalTo(before.size() - 1));
     // Множество групп после удаления
     Groups after = app.group().all();
-    // Сравнение размера множеств до и после удаления
-    assertEquals(after.size(), before.size() - 1);
     assertThat(after, equalTo(before.without(deletedGroup)));
   }
 }
