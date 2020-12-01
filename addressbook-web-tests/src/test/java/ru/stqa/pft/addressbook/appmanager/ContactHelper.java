@@ -17,7 +17,7 @@ public class ContactHelper extends HelperBase {
     super(wd);
   }
 
-  public void goToHomePage() {
+  public void returnToHomePage() {
     if (isElementPresent(By.id("maintable"))) {
       return;
     }
@@ -48,24 +48,8 @@ public class ContactHelper extends HelperBase {
     wd.switchTo().alert().accept();
   }
 
-  public ContactData infoFromEditForm(ContactData contact) {
-    initContactModificationById(contact);
-    String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
-    String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
-    String home = wd.findElement(By.name("home")).getAttribute("value");
-    String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
-    String work = wd.findElement(By.name("work")).getAttribute("value");
-    wd.navigate().back();
-    return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname)
-            .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
-  }
-
-  public void initContactModificationById(ContactData contact) {
-    /*
-    Старый вариант
+  public void initContactModification(ContactData contact) {
     wd.findElement(By.xpath("//input[@id='" + contact.getId() + "']/../../td[8]//img")).click();
-    */
-    wd.findElement(By.xpath(String.format("//input[@id='%s']/../../td[8]//img", contact.getId()))).click();
   }
 
   public void submitContactModification() {
@@ -84,11 +68,11 @@ public class ContactHelper extends HelperBase {
   }
 
   public void modify(ContactData contact) {
-    initContactModificationById(contact);
+    initContactModification(contact);
     fillContactForm(contact, false);
     submitContactModification();
     contactCache = null;
-    goToHomePage();
+    returnToHomePage();
   }
 
   public void delete(ContactData contact) {
