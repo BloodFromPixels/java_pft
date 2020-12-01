@@ -95,8 +95,14 @@ public class ContactHelper extends HelperBase {
       int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value"));
       String lastName = cells.get(1).getText();
       String firstName = cells.get(2).getText();
-      // Полученными выше значениями заполняем ContactData, после чего заполняем множество объектами
-      contacts.add(new ContactData().withFirstname(firstName).withLastname(lastName).withId(id));
+      String[] phones = cells.get(5).getText().split("\n");
+      contacts.add(new ContactData()
+              .withId(id)
+              .withFirstname(firstName)
+              .withLastname(lastName)
+              .withHomePhone(phones[0])
+              .withMobilePhone(phones[1])
+              .withWorkPhone(phones[2]));
       }
     return contacts;
   }
