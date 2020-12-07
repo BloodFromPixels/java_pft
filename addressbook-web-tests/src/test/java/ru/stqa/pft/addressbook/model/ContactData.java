@@ -152,15 +152,15 @@ public class ContactData {
   }
 
   public String getEmail() {
-    return email;
+    return null == email ? "" : email;
   }
 
   public String getEmail2() {
-    return email2;
+    return null == email2 ? "" : email2;
   }
 
   public String getEmail3() {
-    return email3;
+    return null == email3 ? "" : email3;
   }
 
   public String getAllEmails() {
@@ -168,19 +168,19 @@ public class ContactData {
   }
 
   public String getAddress() {
-    return address;
+    return null == address ? "" : address;
   }
 
   public String getHomePhone() {
-    return homePhone;
+    return null == homePhone ? "" : homePhone;
   }
 
   public String getMobilePhone() {
-    return mobilePhone;
+    return null == mobilePhone ? "" : mobilePhone;
   }
 
   public String getWorkPhone() {
-    return workPhone;
+    return null == workPhone ? "" : workPhone;
   }
 
   public String getAllPhones() {
@@ -188,7 +188,7 @@ public class ContactData {
   }
 
   public String getGroup() {
-    return group;
+    return null == group ? "" : group;
   }
 
   public File getPhoto() {
@@ -204,7 +204,6 @@ public class ContactData {
             '}';
   }
 
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -213,8 +212,15 @@ public class ContactData {
     ContactData that = (ContactData) o;
 
     if (id != that.id) return false;
-    if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
-    return lastname != null ? lastname.equals(that.lastname) : that.lastname == null;
+    if (!getFirstname().equals(that.getFirstname())) return false;
+    if (!getLastname().equals(that.getLastname())) return false;
+    if (!getEmail().equals(that.getEmail())) return false;
+    if (!getEmail2().equals(that.getEmail2())) return false;
+    if (!getEmail3().equals(that.getEmail3())) return false;
+    if (!getHomePhone().equals(that.getHomePhone())) return false;
+    if (!getMobilePhone().equals(that.getMobilePhone())) return false;
+    if (!getWorkPhone().equals(that.getWorkPhone())) return false;
+    return getAddress().equals(that.getAddress());
   }
 
   @Override
@@ -222,6 +228,13 @@ public class ContactData {
     int result = id;
     result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
     result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+    result = 31 * result + (email != null ? email.hashCode() : 0);
+    result = 31 * result + (email2 != null ? email2.hashCode() : 0);
+    result = 31 * result + (email3 != null ? email3.hashCode() : 0);
+    result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
+    result = 31 * result + (mobilePhone != null ? mobilePhone.hashCode() : 0);
+    result = 31 * result + (workPhone != null ? workPhone.hashCode() : 0);
+    result = 31 * result + (address != null ? address.hashCode() : 0);
     return result;
   }
 }
