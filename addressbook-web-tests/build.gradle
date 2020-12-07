@@ -16,6 +16,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     // Для протоколирования
     implementation 'ch.qos.logback:logback-classic:1.2.3'
+    // Для работы с БД
+    implementation 'mysql:mysql-connector-java:8.0.22'
 }
 
 task testGroups(type: Test) {
