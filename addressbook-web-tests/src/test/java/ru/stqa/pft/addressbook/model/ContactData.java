@@ -45,9 +45,9 @@ public class ContactData {
   @Transient
   private String allEmails;
 
+  @Transient
   @Column(name = "address")
   @Type(type = "text")
-  @Transient
   private String address;
 
   @Column(name = "home")
