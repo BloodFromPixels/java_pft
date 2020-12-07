@@ -59,13 +59,13 @@ public class GroupCreationTests extends TestBase {
   public void testGroupCreation(GroupData group) {
     app.goTo().GroupPage();
     // Множество групп до добавления
-    Groups before = app.group().all();
+    Groups before = app.db().groups();
     // Создаём группу
     app.group().create(group);
     // Сравнение размера множеств до и после добавления
     assertThat(app.group().count(), equalTo(before.size() + 1));
     // Множество групп после добавления
-    Groups after = app.group().all();
+    Groups after = app.db().groups();
     // Сравнение содержимого нового и старого множеств
     //assertThat(after, equalTo(before));
     assertThat(after, equalTo(before.withAdded(group
