@@ -7,10 +7,15 @@ repositories {
 dependencies {
     implementation 'org.testng:testng:7.3.0'
     implementation 'org.seleniumhq.selenium:selenium-java:4.0.0-alpha-6'
+    // Для сравнения
     implementation 'org.hamcrest:java-hamcrest:2.0.0.0'
+    // Для опций командной строки
     implementation 'com.beust:jcommander:1.78'
+    // Для работы с xml и json
     implementation 'com.thoughtworks.xstream:xstream:1.4.14'
     implementation 'com.google.code.gson:gson:2.8.6'
+    // Для протоколирования
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
 }
 
 task testGroups(type: Test) {

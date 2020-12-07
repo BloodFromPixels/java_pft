@@ -48,3 +48,5 @@ public class ContactCreationTests extends TestBase{
             .withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
   }
 }
+
+
