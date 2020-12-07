@@ -12,9 +12,8 @@ public class GroupModificationTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
-    app.goTo().GroupPage();
-    // Ищем, есть ли группы для модификации. Если нет - создаём
-    if (app.group().all().size() == 0) {
+    if (app.db().groups().size() == 0) {
+      app.goTo().GroupPage();
       app.group().create(new GroupData().withName("test1"));
     }
   }
@@ -22,17 +21,18 @@ public class GroupModificationTests extends TestBase {
   @Test
   public void testGroupModification () {
     // Множество групп до модификации
-    Groups before = app.group().all();
+    Groups before = app.db().groups();
     // Возращение первого попавшего элемента множества и помещение его в объект deletedGroup
     GroupData modifiedGroup = before.iterator().next();
     // Выбор конкретной группы и изменение
     GroupData group = new GroupData()
             .withId(modifiedGroup.getId()).withName("test1").withHeader("test2").withFooter("test3");
+    app.goTo().GroupPage();
     app.group().modify(group);
     // Сравнение множеств до и после модификации
     assertThat(app.group().count(), equalTo(before.size()));
     // Множество групп после модификации
-    Groups after = app.group().all();
+    Groups after = app.db().groups();
     assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
   }
 }
