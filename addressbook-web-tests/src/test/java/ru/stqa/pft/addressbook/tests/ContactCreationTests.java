@@ -22,7 +22,7 @@ public class ContactCreationTests extends TestBase{
 
   // Провайдер тестовых данных с json
   @DataProvider
-  public Iterator<Object[]> validGroupsFromJson() throws IOException {
+  public Iterator<Object[]> validContactsFromJson() throws IOException {
     try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")))) {
       String json = "";
       String line = reader.readLine();
@@ -32,11 +32,11 @@ public class ContactCreationTests extends TestBase{
       }
       Gson gson = new Gson();
       List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>(){}.getType());
-      return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+      return contacts.stream().map((с) -> new Object[] {с}).collect(Collectors.toList()).iterator();
     }
   }
 
-  @Test(dataProvider = "validGroupsFromJson")
+  @Test(dataProvider = "validContactsFromJson")
   public void testContactCreation(ContactData contact) {
     Contacts before = app.db().contacts();
     app.goTo().creationPage();

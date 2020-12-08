@@ -15,7 +15,6 @@ public class ContactAddressTests extends TestBase{
       app.contact().create(new ContactData()
               .withFirstname("test1")
               .withLastname("test2")
-              .withGroup("test1")
               .withAddress("Something like 123 !№;%:?*() Кремль @#$%^&{}[]\nВторая строка"), true);
       app.contact().goToHomePage();
     }

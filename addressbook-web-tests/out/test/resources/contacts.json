@@ -1,17 +1,6 @@
 [
   {
     "firstname": "test 0",
-    "lastname": "header 0",
-    "group": "test 1"
-  },
-  {
-    "firstname": "test 1",
-    "lastname": "header 1",
-    "group": "test 1"
-  },
-  {
-    "firstname": "test 2",
-    "lastname": "header 2",
-    "group": "test 1"
+    "lastname": "header 0"
   }
 ]
