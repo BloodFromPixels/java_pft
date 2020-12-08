@@ -10,7 +10,10 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,15 +61,10 @@ public class GroupCreationTests extends TestBase {
   @Test(dataProvider = "validGroupsFromJson")
   public void testGroupCreation(GroupData group) {
     app.goTo().GroupPage();
-    // Множество групп до добавления
     Groups before = app.db().groups();
-    // Создаём группу
     app.group().create(group);
-    // Сравнение размера множеств до и после добавления
     assertThat(app.group().count(), equalTo(before.size() + 1));
-    // Множество групп после добавления
     Groups after = app.db().groups();
-    // Сравнение содержимого нового и старого множеств
     //assertThat(after, equalTo(before));
     assertThat(after, equalTo(before.withAdded(group
             .withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
@@ -75,16 +73,11 @@ public class GroupCreationTests extends TestBase {
   @Test (enabled = false)
   public void testBadGroupCreation() {
     app.goTo().GroupPage();
-    // Множество групп до добавления
     Groups before = app.group().all();
-    // Создаём группу
     GroupData group = new GroupData().withName("test'");
     app.group().create(group);
-    // Сравнение размера множеств до и после добавления
     assertThat(app.group().count(), equalTo(before.size()));
-    // Множество групп после добавления
     Groups after = app.group().all();
-    // Сравнение содержимого нового и старого множеств
     assertThat(after, equalTo(before));
   }
 }
