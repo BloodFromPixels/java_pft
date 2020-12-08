@@ -2,8 +2,10 @@
 
     <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss"/>
 
+    <property name="USER_HOME" value="/home/ares-ortega/Devel/java_pft/addressbook-web-tests/src/test/resources/logs" />
+
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>test-${bySecond}.log</file>
+        <file>${USER_HOME}/test-${bySecond}.log</file>
         <append>true</append>
         <!-- set immediateFlush to false for much higher logging throughput -->
         <immediateFlush>true</immediateFlush>
