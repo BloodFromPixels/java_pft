@@ -20,16 +20,11 @@ public class GroupDeletionTests extends TestBase {
 
   @Test
   public void testGroupDeletion() {
-    // Множество групп до удаления
     Groups before = app.db().groups();
-    // Возращение первого попавшего элемента множества и помещение его в объект deletedGroup
     GroupData deletedGroup = before.iterator().next();
-    // Выбор группы и удаление. Возвращение на исходную страницу с группами
     app.goTo().GroupPage();
     app.group().delete(deletedGroup);
-    // Сравнение размера множеств до и после удаления
     assertThat(app.group().count(), equalTo(before.size() - 1));
-    // Множество групп после удаления
     Groups after = app.db().groups();
     assertThat(after, equalTo(before.without(deletedGroup)));
   }
