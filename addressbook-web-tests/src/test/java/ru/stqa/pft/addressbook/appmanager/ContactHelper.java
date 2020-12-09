@@ -4,11 +4,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.List;
+
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 public class ContactHelper extends HelperBase {
 
@@ -20,7 +23,7 @@ public class ContactHelper extends HelperBase {
     if (isElementPresent(By.id("maintable"))) {
       return;
     }
-    click(By.linkText("home page"));
+    click(By.linkText("home"));
   }
 
   public void submitContactCreation() {
@@ -38,14 +41,13 @@ public class ContactHelper extends HelperBase {
     type(By.name("mobile"), contactData.getMobilePhone());
     type(By.name("work"), contactData.getWorkPhone());
     //attach(By.name("photo"), contactData.getPhoto());
-
     if (creation) {
       if (contactData.getGroups().size() > 0) {
-        Assert.assertTrue(contactData.getGroups().size() == 1);
+        assertTrue(contactData.getGroups().size() == 1);
         new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
       }
     } else {
-      Assert.assertFalse(isElementPresent(By.name("new_group")));
+      assertFalse(isElementPresent(By.name("new_group")));
     }
   }
 
@@ -92,6 +94,26 @@ public class ContactHelper extends HelperBase {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
+  }
+
+  public void selectDisplayGroup(String name) {
+    new Select(wd.findElement(By.name("group"))).selectByVisibleText(name);
+  }
+
+  public void removeFromGroup(String name) {
+    click(By.name("remove"));
+  }
+
+  public void addContactToGroup(ContactData contact, GroupData group) {
+    selectContactById(contact.getId());
+    new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getName());
+    click(By.name("add"));
+  }
+
+  public void removeContactFromGroup(ContactData contact, GroupData group) {
+    selectDisplayGroup(group.getName());
+    selectContactById(contact.getId());
+    removeFromGroup(group.getName());
   }
 
   public Contacts all() {

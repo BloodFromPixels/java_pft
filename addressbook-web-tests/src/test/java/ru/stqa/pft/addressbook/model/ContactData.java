@@ -193,6 +193,11 @@ public class ContactData {
     return new File(photo);
   }
 
+  public ContactData inGroup(GroupData group) {
+    groups.add(group);
+    return this;
+  }
+
   @Override
   public String toString() {
     return "ContactData{" +
@@ -234,10 +239,5 @@ public class ContactData {
     result = 31 * result + (workPhone != null ? workPhone.hashCode() : 0);
     result = 31 * result + (address != null ? address.hashCode() : 0);
     return result;
-  }
-
-  public ContactData inGroup(GroupData group) {
-    groups.add(group);
-    return this;
   }
 }

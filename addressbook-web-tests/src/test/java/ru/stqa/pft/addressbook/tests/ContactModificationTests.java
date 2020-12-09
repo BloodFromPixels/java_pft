@@ -15,12 +15,10 @@ public class ContactModificationTests extends TestBase {
   @BeforeMethod
   public void ensurePreconditions() {
     if (app.db().contacts().size() == 0) {
-      Groups groups = app.db().groups();
       app.goTo().creationPage();
       app.contact().create(new ContactData()
               .withFirstname("test1")
-              .withLastname("test2")
-              .inGroup(groups.iterator().next()), true);
+              .withLastname("test2"), true);
       app.contact().goToHomePage();
     }
   }

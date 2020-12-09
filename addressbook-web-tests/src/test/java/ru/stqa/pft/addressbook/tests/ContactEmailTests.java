@@ -18,7 +18,6 @@ public class ContactEmailTests extends TestBase{
       app.contact().create(new ContactData()
               .withFirstname("test1")
               .withLastname("test2")
-              /*.withGroup("test1")*/
               .withEmail("inbox@mail.ru")
               .withEmail2("inbox-1@yandex.ru")
               .withEmail3("inbox_2@gmail.com"), true);

@@ -19,7 +19,6 @@ public class ContactPhoneTests extends TestBase {
       app.contact().create(new ContactData()
               .withFirstname("test1")
               .withLastname("test2")
-              /*.withGroup("test1")*/
               .withHomePhone("111")
               .withMobilePhone("222")
               .withWorkPhone("333"), true);
