@@ -20,6 +20,11 @@ public class RegistrationTests extends TestBase{
   }
 
   @Test
+  public void testRegistration() {
+    app.registration().start("user1", "user1@localhost.localdomain");
+  }
+
+  /*
   public void testRegistration() throws IOException, MessagingException {
     long now = System.currentTimeMillis();
     String user = String.format("user%s", now);
@@ -39,6 +44,7 @@ public class RegistrationTests extends TestBase{
     VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
     return regex.getText(mailMessage.text);
   }
+  */
 
   //@AfterMethod(alwaysRun = true)
   public void stopMailServer() {
