@@ -38,7 +38,6 @@ public class HelperBase {
     }
   }
 
-
   protected boolean isElementPresent(By locator) {
     try {
       wd.findElement(locator);

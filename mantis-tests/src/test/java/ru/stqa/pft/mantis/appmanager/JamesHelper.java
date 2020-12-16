@@ -1,7 +1,8 @@
 package ru.stqa.pft.mantis.appmanager;
 
 import org.apache.commons.net.telnet.TelnetClient;
-import ru.sqta.pft.mantis.model.MailMessage;
+import ru.stqa.pft.mantis.model.MailMessage;
+import ru.stqa.pft.mantis.model.UserData;
 
 import javax.mail.*;
 import java.io.IOException;
@@ -37,10 +38,10 @@ public class JamesHelper {
     return result.trim().equals("User " + name + " exist");
   }
 
-  public void createUser(String name, String passwd) {
+  public void createUser(UserData user) {
     initTelnetSession();
-    write("adduser " + name + " " + passwd);
-    String result = readUntil("User " + name + " added");
+    write("adduser " + user.getLogin() + " " + user.getPassword());
+    String result = readUntil("User " + user.getLogin() + " added");
     closeTelnetSession();
   }
 
@@ -51,7 +52,7 @@ public class JamesHelper {
     closeTelnetSession();
   }
 
-  private void initTelnetSession() {
+  public void initTelnetSession() {
     mailserver = app.getProperty("mailserver.host");
     int port = Integer.parseInt(app.getProperty("mailserver.port"));
     String login = app.getProperty("mailserver.adminlogin");
@@ -60,7 +61,7 @@ public class JamesHelper {
     try {
       telnet.connect(mailserver, port);
       in = telnet.getInputStream();
-      out = new PrintStream( telnet.getOutputStream() );
+      out = new PrintStream(telnet.getOutputStream());
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -76,7 +77,7 @@ public class JamesHelper {
     readUntil("Password:");
     write(password);
 
-    readUntil("Welcome "+login+". HELP for a list of commands");
+    readUntil("Welcome " + login + ". HELP for a list of commands");
   }
 
   private String readUntil(String pattern) {
@@ -110,7 +111,7 @@ public class JamesHelper {
     }
   }
 
-  private void closeTelnetSession() {
+  public void closeTelnetSession() {
     write("quit");
   }
 
