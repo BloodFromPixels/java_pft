@@ -48,6 +48,8 @@ public class MailHelper {
   }
 
   public void start() {
+    int port = 1100;
+    wiser.setPort(port);
     wiser.start();
   }
 
