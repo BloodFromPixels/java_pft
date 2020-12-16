@@ -51,6 +51,6 @@ public class RegistrationHelper extends HelperBase {
   }
 
   public void resetPassword() {
-    click(By.xpath("//input[@value='Reset Password']"));
+    click(By.cssSelector("input[value='Reset Password']"));
   }
 }
