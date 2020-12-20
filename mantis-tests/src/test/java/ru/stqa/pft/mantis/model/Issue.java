@@ -7,17 +7,9 @@ public class Issue {
   private String description;
   private Project project;
 
-  public int getId() {
-    return id;
-  }
-
   public Issue withId(int id) {
     this.id = id;
     return this;
-  }
-
-  public String getSummary() {
-    return summary;
   }
 
   public Issue withSummary(String summary) {
@@ -25,21 +17,29 @@ public class Issue {
     return this;
   }
 
-  public String getDescription() {
-    return description;
-  }
-
   public Issue withDescription(String description) {
     this.description = description;
     return this;
   }
 
-  public Project getProject() {
-    return project;
-  }
-
   public Issue withProject(Project project) {
     this.project = project;
     return this;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public String getSummary() {
+    return summary;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public Project getProject() {
+    return project;
   }
 }
