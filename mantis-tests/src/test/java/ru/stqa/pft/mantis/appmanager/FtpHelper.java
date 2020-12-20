@@ -9,7 +9,7 @@ import java.io.IOException;
 public class FtpHelper {
 
   private final ApplicationManager app;
-  private FTPClient ftp;
+  private final FTPClient ftp;
 
   // Инициализация, создаётся FTPClient
   public FtpHelper(ApplicationManager app) {

@@ -17,12 +17,14 @@ import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.util.Arrays;
 
+import static java.lang.System.getProperty;
+
 public class TestBase {
 
   Logger logger = LoggerFactory.getLogger(TestBase.class);
 
   protected static final ApplicationManager app
-          = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
+          = new ApplicationManager(getProperty("browser", BrowserType.CHROME));
 
   @BeforeSuite(alwaysRun = true)
   public void setUp() throws Exception {
@@ -48,11 +50,7 @@ public class TestBase {
 
   public boolean isIssueOpen(int issueId) throws MalformedURLException, ServiceException, RemoteException {
     String issueStatus = app.soap().getIssueStatus(issueId);
-    if (!issueStatus.equals("closed")){
-      return true;
-    } else{
-      return false;
-    }
+    return !issueStatus.equals("closed");
   }
 
   public void skipIfNotFixed(int issueId) throws MalformedURLException, ServiceException, RemoteException {

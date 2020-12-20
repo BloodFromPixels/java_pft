@@ -15,9 +15,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.String.format;
+
 public class HttpSession {
-  private CloseableHttpClient httpclient;
-  private ApplicationManager app;
+  private final CloseableHttpClient httpclient;
+  private final ApplicationManager app;
 
   public HttpSession(ApplicationManager app) {
     this.app = app;
@@ -34,7 +36,7 @@ public class HttpSession {
     post.setEntity(new UrlEncodedFormEntity(params));
     CloseableHttpResponse response = httpclient.execute(post);
     String body = getTextFrom(response);
-    return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
+    return body.contains(format("<span class=\"user-info\">%s</span>", username));
   }
 
   private String getTextFrom(CloseableHttpResponse response) throws IOException {
@@ -49,6 +51,6 @@ public class HttpSession {
     HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/index.php");
     CloseableHttpResponse response = httpclient.execute(get);
     String body = getTextFrom(response);
-    return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
+    return body.contains(format("<span class=\"user-info\">%s</span>", username));
   }
 }

@@ -12,14 +12,14 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static java.math.BigInteger.valueOf;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 public class SoapHelper {
-  private ApplicationManager app;
+  private final ApplicationManager app;
 
   public SoapHelper(ApplicationManager app) {
     this.app = app;
@@ -30,7 +30,7 @@ public class SoapHelper {
     ProjectData[] projects = mc.mc_projects_get_user_accessible("administrator", "root");
     return asList(projects).stream()
             .map((p) -> new Project().withId(p.getId().intValue()).withName(p.getName()))
-            .collect(Collectors.toSet());
+            .collect(toSet());
   }
 
   private MantisConnectPortType getMantisConnect() throws ServiceException, MalformedURLException {
@@ -54,7 +54,7 @@ public class SoapHelper {
             .withSummary(createdIssueData.getSummary())
             .withDescription(createdIssueData.getDescription())
             .withProject(new Project().withId(createdIssueData.getProject().getId().intValue())
-                                      .withName(createdIssueData.getProject().getName()));
+                    .withName(createdIssueData.getProject().getName()));
   }
 
   public String getIssueStatus(int issueId) throws MalformedURLException, ServiceException, RemoteException {
@@ -70,7 +70,7 @@ public class SoapHelper {
     List<IssueStatus> issueStatusList = asList(mc.mc_enum_status("administrator", "root")).stream()
             .map((s) -> new IssueStatus().withId(s.getId().intValue()).withStatus(s.getName()))
             .collect(toList());
-    for (IssueStatus status: issueStatusList){
+    for (IssueStatus status : issueStatusList) {
       System.out.println(status.getStatus());
     }
   }

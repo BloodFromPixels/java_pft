@@ -14,9 +14,10 @@ import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
+import static java.lang.System.getProperty;
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toSet;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -25,7 +26,7 @@ public class TestBase {
   Logger logger = LoggerFactory.getLogger(TestBase.class);
 
   protected static final ApplicationManager app
-          = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
+          = new ApplicationManager(getProperty("browser", BrowserType.CHROME));
 
   @BeforeSuite(alwaysRun = true)
   public void setUp() throws Exception {
@@ -39,10 +40,10 @@ public class TestBase {
 
   @BeforeMethod
   public void logTestStart(Method m, Object[] p) {
-    logger.info("Start test " + m.getName() + " with parameters " + Arrays.asList(p));
+    logger.info("Start test " + m.getName() + " with parameters " + asList(p));
   }
 
-  @AfterMethod (alwaysRun = true)
+  @AfterMethod(alwaysRun = true)
   public void logTestStop(Method m) {
     logger.info("Stop test " + m.getName());
   }
@@ -53,7 +54,7 @@ public class TestBase {
       Groups uiGroups = app.group().all();
       assertThat(uiGroups, equalTo(dbGroups.stream().map((g) -> new GroupData()
               .withId(g.getId())
-              .withName(g.getName())).collect(Collectors.toSet())));
+              .withName(g.getName())).collect(toSet())));
     }
   }
 
@@ -63,7 +64,7 @@ public class TestBase {
       Contacts uiContacts = app.contact().all();
       assertThat(uiContacts, equalTo(dbContacts.stream().map((c) -> new ContactData()
               .withId(c.getId())
-              .withFirstname(c.getFirstname())).collect(Collectors.toSet())));
+              .withFirstname(c.getFirstname())).collect(toSet())));
     }
   }
 }

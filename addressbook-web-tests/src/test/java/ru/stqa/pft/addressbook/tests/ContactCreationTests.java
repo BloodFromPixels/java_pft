@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class ContactCreationTests extends TestBase{
+public class ContactCreationTests extends TestBase {
 
   // Провайдер тестовых данных с json
   @DataProvider
@@ -33,8 +33,9 @@ public class ContactCreationTests extends TestBase{
         line = reader.readLine();
       }
       Gson gson = new Gson();
-      List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>(){}.getType());
-      return contacts.stream().map((с) -> new Object[] {с}).collect(Collectors.toList()).iterator();
+      List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>() {
+      }.getType());
+      return contacts.stream().map((с) -> new Object[]{с}).collect(Collectors.toList()).iterator();
     }
   }
 

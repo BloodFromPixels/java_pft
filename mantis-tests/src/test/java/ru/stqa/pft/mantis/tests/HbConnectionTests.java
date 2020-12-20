@@ -13,6 +13,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.sql.DriverManager.getConnection;
+import static org.hibernate.boot.registry.StandardServiceRegistryBuilder.destroy;
+
 public class HbConnectionTests {
   private SessionFactory sessionFactory;
 
@@ -25,7 +28,7 @@ public class HbConnectionTests {
       sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
     } catch (Exception e) {
       e.printStackTrace();
-      StandardServiceRegistryBuilder.destroy(registry);
+      destroy(registry);
     }
   }
 
@@ -45,7 +48,7 @@ public class HbConnectionTests {
   public void checkDbConnectionTest() {
     Connection conn = null;
     try {
-      conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bugtracker?user=root&password=");
+      conn = getConnection("jdbc:mysql://localhost:3306/bugtracker?user=root&password=");
       Statement st = conn.createStatement();
       ResultSet rs = st.executeQuery("select id, username, email from mantis_user_table");
       List<UserData> users = new ArrayList<UserData>();

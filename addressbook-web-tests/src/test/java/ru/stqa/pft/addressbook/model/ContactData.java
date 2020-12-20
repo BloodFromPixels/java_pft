@@ -67,10 +67,10 @@ public class ContactData {
   @Type(type = "text")
   private String photo;
 
-  @ManyToMany (fetch = FetchType.EAGER)
-  @JoinTable (name = "address_in_groups",
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "address_in_groups",
           joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
-  private Set<GroupData> groups = new HashSet<GroupData>();
+  private final Set<GroupData> groups = new HashSet<GroupData>();
 
   public ContactData withPhoto(File photo) {
     this.photo = photo.getPath();

@@ -15,6 +15,8 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.String.format;
+
 public class ContactDataGenerator {
 
   @Parameter(names = "-c", description = "Contact count")
@@ -70,8 +72,8 @@ public class ContactDataGenerator {
     List<ContactData> contacts = new ArrayList<ContactData>();
     for (int i = 0; i < count; i++) {
       contacts.add(new ContactData()
-              .withFirstname(String.format("test %s", i))
-              .withLastname(String.format("header %s", i)));
+              .withFirstname(format("test %s", i))
+              .withLastname(format("header %s", i)));
     }
     return contacts;
   }

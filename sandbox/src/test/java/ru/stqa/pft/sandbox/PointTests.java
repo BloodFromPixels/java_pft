@@ -1,7 +1,8 @@
 package ru.stqa.pft.sandbox;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertEquals;
 
 public class PointTests {
 
@@ -10,7 +11,7 @@ public class PointTests {
     // стандартная проверка (разные значения)
     Point p1 = new Point(4,5);
     Point p2 = new Point(3,2);
-    Assert.assertEquals(p1.distance(p2), 3.1622776601683795);
+    assertEquals(p1.distance(p2), 3.1622776601683795);
 
   }
   @Test
@@ -18,14 +19,14 @@ public class PointTests {
     // проверка точек с одинаковыми координитами
     Point p3 = new Point(5,5);
     Point p4 = new Point(5,5);
-    Assert.assertEquals(p3.distance(p4), 0);
+    assertEquals(p3.distance(p4), 0);
   }
   @Test
   public void testDistanceNegativeCoordinates() {
     // проверка точек с негативными координатами
     Point p1 = new Point(4,-5);
     Point p2 = new Point(-3,2);
-    Assert.assertEquals(p1.distance(p2), 9.899494936611665);
+    assertEquals(p1.distance(p2), 9.899494936611665);
   }
 
 }

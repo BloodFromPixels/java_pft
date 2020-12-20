@@ -15,6 +15,8 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.String.format;
+
 public class GroupDataGenerator {
 
   @Parameter(names = "-c", description = "Group count")
@@ -72,7 +74,7 @@ public class GroupDataGenerator {
     System.out.println(new File(".").getAbsolutePath());
     try (Writer writer = new FileWriter(file)) {
       for (GroupData group : groups) {
-        writer.write(String.format("%s;%s;%s\n", group.getName(), group.getHeader(), group.getFooter()));
+        writer.write(format("%s;%s;%s\n", group.getName(), group.getHeader(), group.getFooter()));
       }
     }
   }
@@ -81,9 +83,9 @@ public class GroupDataGenerator {
     List<GroupData> groups = new ArrayList<GroupData>();
     for (int i = 0; i < count; i++) {
       groups.add(new GroupData()
-              .withName(String.format("test %s", i))
-              .withHeader(String.format("header %s", i))
-              .withFooter(String.format("footer %s", i)));
+              .withName(format("test %s", i))
+              .withHeader(format("header %s", i))
+              .withFooter(format("footer %s", i)));
     }
     return groups;
   }

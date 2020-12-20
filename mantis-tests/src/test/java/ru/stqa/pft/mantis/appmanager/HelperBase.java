@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 
 import java.io.File;
 
+import static org.openqa.selenium.By.linkText;
+
 public class HelperBase {
 
   protected ApplicationManager app;
@@ -51,6 +53,6 @@ public class HelperBase {
     if (isElementPresent(By.id("maintable"))) {
       return;
     }
-    click(By.linkText("home"));
+    click(linkText("home"));
   }
 }

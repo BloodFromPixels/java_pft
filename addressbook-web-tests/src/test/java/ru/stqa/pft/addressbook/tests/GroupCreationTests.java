@@ -38,7 +38,7 @@ public class GroupCreationTests extends TestBase {
       XStream xstream = new XStream();
       xstream.processAnnotations(GroupData.class);
       List<GroupData> groups = (List<GroupData>) xstream.fromXML(xml);
-      return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+      return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
   }
 
@@ -53,8 +53,9 @@ public class GroupCreationTests extends TestBase {
         line = reader.readLine();
       }
       Gson gson = new Gson();
-      List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>(){}.getType()); // List<GroupData>.class
-      return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+      List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>() {
+      }.getType()); // List<GroupData>.class
+      return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
   }
 
@@ -70,7 +71,7 @@ public class GroupCreationTests extends TestBase {
             .withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
   }
 
-  @Test (enabled = false)
+  @Test(enabled = false)
   public void testBadGroupCreation() {
     app.goTo().GroupPage();
     Groups before = app.group().all();

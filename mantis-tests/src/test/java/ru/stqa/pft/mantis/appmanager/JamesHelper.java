@@ -8,19 +8,21 @@ import javax.mail.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.lang.System.currentTimeMillis;
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 
 public class JamesHelper {
 
-  private ApplicationManager app;
+  private final ApplicationManager app;
 
-  private TelnetClient telnet;
+  private final TelnetClient telnet;
   private InputStream in;
   private PrintStream out;
 
-  private Session mailSession;
+  private final Session mailSession;
   private Store store;
   private String mailserver;
 
@@ -140,8 +142,8 @@ public class JamesHelper {
 
   public List<MailMessage> waitForMail(String username, String password, long timeout) throws MessagingException {
     initTelnetSession();
-    long now = System.currentTimeMillis();
-    while (System.currentTimeMillis() < now + timeout) {
+    long now = currentTimeMillis();
+    while (currentTimeMillis() < now + timeout) {
       List<MailMessage> allMail = getAllMail(username, password);
       if (allMail.size() > 0) {
         return allMail;
@@ -157,8 +159,8 @@ public class JamesHelper {
 
   public List<MailMessage> getAllMail(String username, String password) throws MessagingException {
     Folder inbox = openInbox(username, password);
-    List<MailMessage> messages = Arrays.asList(inbox.getMessages()).stream().map((m) -> toModelMail(m))
-            .collect(Collectors.toList());
+    List<MailMessage> messages = asList(inbox.getMessages()).stream().map((m) -> toModelMail(m))
+            .collect(toList());
     closeFolder(inbox);
     return messages;
   }

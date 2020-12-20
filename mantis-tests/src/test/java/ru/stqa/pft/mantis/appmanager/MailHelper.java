@@ -10,8 +10,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.lang.System.currentTimeMillis;
+
 public class MailHelper {
-  private ApplicationManager app;
+  private final ApplicationManager app;
   private final Wiser wiser;
 
   public MailHelper(ApplicationManager app) {
@@ -20,8 +22,8 @@ public class MailHelper {
   }
 
   public List<MailMessage> waitForMail(int count, long timeout) throws MessagingException, IOException {
-    long start = System.currentTimeMillis();
-    while (System.currentTimeMillis() < start + timeout) {
+    long start = currentTimeMillis();
+    while (currentTimeMillis() < start + timeout) {
       if (wiser.getMessages().size() >= count) {
         return wiser.getMessages().stream().map((m) -> toModelMail(m)).collect(Collectors.toList());
       }

@@ -1,12 +1,14 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.List;
+
+import static java.lang.Integer.parseInt;
+import static org.openqa.selenium.By.*;
 
 public class GroupHelper extends HelperBase {
 
@@ -15,39 +17,39 @@ public class GroupHelper extends HelperBase {
   }
 
   public void returnToGroupPage() {
-    click(By.linkText("group page"));
+    click(linkText("group page"));
   }
 
   public void submitGroupCreation() {
-    click(By.name("submit"));
+    click(name("submit"));
   }
 
   public void fillGroupForm(GroupData groupData) {
-    type(By.name("group_name"), groupData.getName());
-    type(By.name("group_header"), groupData.getHeader());
-    type(By.name("group_footer"), groupData.getFooter());
+    type(name("group_name"), groupData.getName());
+    type(name("group_header"), groupData.getHeader());
+    type(name("group_footer"), groupData.getFooter());
   }
 
   public void initGroupCreation() {
-    click(By.name("new"));
+    click(name("new"));
   }
 
   public void deleteSelectedGroups() {
-    click(By.name("delete"));
+    click(name("delete"));
   }
 
   // Выбор группы
   public void selectGroupById(int id) {
     // Находим элемент с локатором, содержащим нужный нам идентификатор, и кликаем по нему
-    wd.findElement(By.cssSelector("input[value = '" + id + "']")).click();
+    wd.findElement(cssSelector("input[value = '" + id + "']")).click();
   }
 
   public void initGroupModification() {
-    click(By.name("edit"));
+    click(name("edit"));
   }
 
   public void submitGroupModification() {
-    click(By.name("update"));
+    click(name("update"));
   }
 
   public void create(GroupData group) {
@@ -78,12 +80,12 @@ public class GroupHelper extends HelperBase {
   }
 
   public boolean isThereAGroup() {
-    return isElementPresent(By.name("selected[]"));
+    return isElementPresent(name("selected[]"));
   }
 
   // Ищем все элементы на странице и считаем их количество
   public int count() {
-    return wd.findElements(By.name("selected[]")).size();
+    return wd.findElements(name("selected[]")).size();
   }
 
   // Кэш
@@ -97,12 +99,12 @@ public class GroupHelper extends HelperBase {
     }
     groupCache = new Groups();
     // Найти все элементы с css селектором span = group
-    List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
+    List<WebElement> elements = wd.findElements(cssSelector("span.group"));
     // Смотрим на все найденные элементы и получаем их имя
     for (WebElement element : elements) {
       String name = element.getText();
       // В элементе "input" берём атрибут с именем "value"
-      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+      int id = parseInt(element.findElement(tagName("input")).getAttribute("value"));
       // Полученными выше значениями заполняем GroupData, после чего заполняем множество объектами
       groupCache.add(new GroupData().withId(id).withName(name));
     }

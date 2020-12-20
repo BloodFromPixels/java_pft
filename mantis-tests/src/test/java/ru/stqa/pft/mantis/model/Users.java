@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Users extends ForwardingSet<UserData> {
-  private Set<UserData> delegate;
+  private final Set<UserData> delegate;
 
   public Users(Users users) {
     this.delegate = new HashSet<UserData>(users.delegate);
