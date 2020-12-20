@@ -1,5 +1,6 @@
 package ru.stqa.pft.mantis.tests;
 
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import ru.stqa.pft.mantis.model.Issue;
 import ru.stqa.pft.mantis.model.Project;
@@ -11,7 +12,7 @@ import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
 
-public class SoapTests extends TestBase{
+public class SoapTests extends TestBase {
 
   @Test
   public void testGetProjects() throws MalformedURLException, ServiceException, RemoteException {
@@ -24,6 +25,13 @@ public class SoapTests extends TestBase{
 
   @Test
   public void testCreateIssue() throws RemoteException, ServiceException, MalformedURLException {
+    try {
+      skipIfNotFixed(5);
+    } catch (SkipException e) {
+      System.out.println(e.getMessage());
+      throw e;
+    }
+
     Set<Project> projects = app.soap().getProjects();
     Issue issue = new Issue()
             .withSummary("Test issue")
@@ -31,5 +39,10 @@ public class SoapTests extends TestBase{
             .withProject(projects.iterator().next());
     Issue created = app.soap().addIssue(issue);
     assertEquals(issue.getSummary(), created.getSummary());
+  }
+
+  @Test(enabled = false)
+  public void testSkipIsNotFixed() throws RemoteException, ServiceException, MalformedURLException {
+    skipIfNotFixed(5);
   }
 }
