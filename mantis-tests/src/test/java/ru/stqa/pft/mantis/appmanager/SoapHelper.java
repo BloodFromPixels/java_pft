@@ -10,13 +10,13 @@ import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.math.BigInteger.valueOf;
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 
 public class SoapHelper {
   private ApplicationManager app;
@@ -69,7 +69,7 @@ public class SoapHelper {
     MantisConnectPortType mc = getMantisConnect();
     List<IssueStatus> issueStatusList = asList(mc.mc_enum_status("administrator", "root")).stream()
             .map((s) -> new IssueStatus().withId(s.getId().intValue()).withStatus(s.getName()))
-            .collect(Collectors.toList());
+            .collect(toList());
     for (IssueStatus status: issueStatusList){
       System.out.println(status.getStatus());
     }

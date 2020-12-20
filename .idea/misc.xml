@@ -4,6 +4,7 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/addressbook-web-tests" />
     <file type="web" url="file://$PROJECT_DIR$/mantis-tests" />
+    <file type="web" url="file://$PROJECT_DIR$/rest-sample" />
     <file type="web" url="file://$PROJECT_DIR$/sandbox" />
     <file type="web" url="file://$PROJECT_DIR$/soap-sample" />
     <file type="web" url="file://$PROJECT_DIR$/../untitled" />
