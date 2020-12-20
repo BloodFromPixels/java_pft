@@ -30,6 +30,7 @@ public class FtpHelper {
     ftp.enterLocalPassiveMode();
     // Передача локального файла, из которого берутся данные и передаются на удалённую машину
     ftp.storeFile(target, new FileInputStream(file));
+    ftp.sendSiteCommand("chmod 755 config_inc.php");
     // Разрыв соединения
     ftp.disconnect();
   }
