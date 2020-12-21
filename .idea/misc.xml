@@ -3,6 +3,7 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/addressbook-web-tests" />
+    <file type="web" url="file://$PROJECT_DIR$/github-sample" />
     <file type="web" url="file://$PROJECT_DIR$/mantis-tests" />
     <file type="web" url="file://$PROJECT_DIR$/rest-sample" />
     <file type="web" url="file://$PROJECT_DIR$/sandbox" />
