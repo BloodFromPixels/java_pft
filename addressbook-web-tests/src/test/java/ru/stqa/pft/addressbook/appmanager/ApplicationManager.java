@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import static java.lang.String.format;
 import static java.lang.System.getProperty;
+import static org.openqa.selenium.Platform.fromString;
 
 public class ApplicationManager {
   private final Properties properties;
@@ -47,6 +48,7 @@ public class ApplicationManager {
     } else {
       DesiredCapabilities capabilities = new DesiredCapabilities();
       capabilities.setBrowserName(browser);
+      capabilities.setPlatform(fromString(getProperty("platform", "win10")));
       wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
     }
 
